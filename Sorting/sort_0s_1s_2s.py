@@ -19,5 +19,9 @@ class Solution:
                 arr[mid], arr[hi] = arr[hi], arr[mid]
                 hi = hi - 1
         return arr
+    
+    #DNF algorithm
+    #TC = O(n)
+    #SC = O(1)
 
 
