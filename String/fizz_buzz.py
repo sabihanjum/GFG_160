@@ -8,7 +8,6 @@ Return an array of strings."""
 
 class Solution:
     def fizzBuzz(self, n : int):
-        
         res = []
         
         #dictionary to  store all fizzBuzz mappings
