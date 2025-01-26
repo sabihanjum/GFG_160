@@ -29,7 +29,7 @@ class Solution:
                     res[bottom][j] = arr[index]
                     index += 1
                 bottom -= 1
-            
+
             #traverse the left most column from bottom to up
             if left <= right:
                 
