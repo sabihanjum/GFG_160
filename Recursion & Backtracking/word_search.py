@@ -1,6 +1,6 @@
 """You are given a two-dimensional mat[][] of size n*m containing English alphabets and a string word. Check if the word exists on the mat. The word can be constructed by using letters from adjacent cells, either horizontally or vertically. The same cell cannot be used more than once."""
 class Solution:
-    def findMatch(mat, word, x, y, wIdx):
+    def findMatch(self, mat, word, x, y, wIdx):
         wLen = len(word)
         n = len(mat)
         m = len(mat[0])
@@ -21,10 +21,10 @@ class Solution:
             mat[x][y] = '#'
 
             # finding subpattern in 4 directions
-            res = (findMatch(mat, word, x - 1, y, wIdx + 1) or
-                findMatch(mat, word, x + 1, y, wIdx + 1) or
-                findMatch(mat, word, x, y - 1, wIdx + 1) or
-                findMatch(mat, word, x, y + 1, wIdx + 1))
+            res = (self.findMatch(mat, word, x - 1, y, wIdx + 1) or
+                self.findMatch(mat, word, x + 1, y, wIdx + 1) or
+                self.findMatch(mat, word, x, y - 1, wIdx + 1) or
+                self.findMatch(mat, word, x, y + 1, wIdx + 1))
 
             # marking this cell as unvisited again
             mat[x][y] = temp
@@ -32,7 +32,7 @@ class Solution:
         # Not matching then return false
         return False
 
-    def isWordExist(mat, word):
+    def isWordExist(self, mat, word):
         wLen = len(word)
         n = len(mat)
         m = len(mat[0])
@@ -47,6 +47,6 @@ class Solution:
 
                 # If first letter matches, then recur and check
                 if mat[i][j] == word[0]:
-                    if findMatch(mat, word, i, j, 0):
+                    if self.findMatch(mat, word, i, j, 0):
                         return True
         return False

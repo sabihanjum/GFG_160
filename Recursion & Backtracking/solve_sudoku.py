@@ -8,12 +8,12 @@ Each of the digits 1-9 must occur exactly once in each of the 9 3x3 sub-boxes of
 Note: Zeros represent blanks to be filled with numbers 1-9, while non-zero cells are fixed and cannot be changed."""
 
 class Solution:
-    def isSafe(mat, i, j, num, row, col, box):
+    def isSafe(self, mat, i, j, num, row, col, box):
         if (row[i] & (1 << num)) or (col[j] & (1 << num)) or (box[i // 3 * 3 + j // 3] & (1 << num)):
             return False
         return True
 
-    def sudokuSolverRec(mat, i, j, row, col, box):
+    def sudokuSolverRec(self, mat, i, j, row, col, box):
         n = len(mat)
 
         # base case: Reached nth column of last row
@@ -27,11 +27,11 @@ class Solution:
 
         # If cell is already occupied then move forward
         if mat[i][j] != 0:
-            return sudokuSolverRec(mat, i, j + 1, row, col, box)
+            return self.sudokuSolverRec(mat, i, j + 1, row, col, box)
 
         for num in range(1, n + 1):
             # If it is safe to place num at current position
-            if isSafe(mat, i, j, num, row, col, box):
+            if self.isSafe(mat, i, j, num, row, col, box):
                 mat[i][j] = num
 
                 # Update masks for the corresponding row, column and box
@@ -39,7 +39,7 @@ class Solution:
                 col[j] |= (1 << num)
                 box[i // 3 * 3 + j // 3] |= (1 << num)
 
-                if sudokuSolverRec(mat, i, j + 1, row, col, box):
+                if self.sudokuSolverRec(mat, i, j + 1, row, col, box):
                     return True
 
                 # Unmask the number num in the corresponding row, column and box masks
@@ -50,7 +50,7 @@ class Solution:
 
         return False
 
-    def solveSudoku(mat):
+    def solveSudoku(self, mat):
         n = len(mat)
         row = [0] * n
         col = [0] * n
@@ -64,4 +64,4 @@ class Solution:
                     col[j] |= (1 << mat[i][j])
                     box[(i // 3) * 3 + j // 3] |= (1 << mat[i][j])
 
-        sudokuSolverRec(mat, 0, 0, row, col, box)
+        self.sudokuSolverRec(mat, 0, 0, row, col, box)
