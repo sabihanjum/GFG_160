@@ -35,7 +35,7 @@ class Solution:
         # from the next of dummy node
         return dummy.next
 
-    def mergeListsRecur(i, j, arr):
+    def mergeListsRecur(self, i, j, arr):
     
         # If single list is left
         if i == j:
@@ -45,24 +45,24 @@ class Solution:
         mid = i + (j - i) // 2
 
         # Merge lists from i to mid 
-        head1 = mergeListsRecur(i, mid, arr)
+        head1 = self.mergeListsRecur(i, mid, arr)
 
         # Merge lists from mid+1 to j 
-        head2 = mergeListsRecur(mid + 1, j, arr)
+        head2 = self.mergeListsRecur(mid + 1, j, arr)
 
         # Merge the above 2 lists 
-        head = mergeTwo(head1, head2)
+        head = self.mergeTwo(head1, head2)
 
         return head
 
     # Function to merge K sorted linked lists
-    def mergeKLists(arr):
+    def mergeKLists(self, arr):
     
         # Base case for 0 lists 
         if len(arr) == 0:
             return None
 
-        return mergeListsRecur(0, len(arr) - 1, arr)
+        return self.mergeListsRecur(0, len(arr) - 1, arr)
 
     def printList(node):
         while node is not None:
