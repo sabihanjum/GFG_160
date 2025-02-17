@@ -7,15 +7,13 @@ Leaf Nodes: All leaf nodes, in left-to-right order, that are not part of the lef
 Reverse Right Boundary: This includes all the nodes on the path from the rightmost leaf node to the root, traversed in reverse order. You must prefer the right child over the left child when traversing. Do not include the root in this section if it was already included in the left boundary.
 
 Note: If the root doesn't have a left subtree or right subtree, then the root itself is the left or right boundary. """
-class Node:
-    def __init__(self, x):
-        self.data = x
-        self.left = None
-        self.right = None
+
 class Solution:
     def isLeaf(self, node):
         return node.left is None and node.right is None
 
+
+    # Function to collect the left boundary nodes
     def collectBoundaryLeft(self, root, res):
         if root is None:
             return
@@ -55,8 +53,8 @@ class Solution:
                         # If it's predecessor is a leaf node
                         if (predecessor.left is None) :
                             res.append(predecessor.data)
-                        predecessor.right = None
-                        current = current.right
+                            predecessor.right = None
+                            current = current.right
                 
     # Function to collect the right boundary nodes
     def collectBoundaryRight(self, root, res):
