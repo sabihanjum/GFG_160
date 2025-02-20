@@ -9,88 +9,50 @@ Reverse Right Boundary: This includes all the nodes on the path from the rightmo
 Note: If the root doesn't have a left subtree or right subtree, then the root itself is the left or right boundary. """
 
 class Solution:
-    def isLeaf(self, node):
-        return node.left is None and node.right is None
-
-
-    # Function to collect the left boundary nodes
     def collectBoundaryLeft(self, root, res):
         if root is None:
             return
-
-        curr = root
-        while not self.isLeaf(curr):
-            res.append(curr.data)
-
-            if curr.left:
-                curr = curr.left
-            else:
-                curr = curr.right
-
-    # Function to collect the leaf nodes using Morris Traversal
-    def collectLeaves(self, root, res):
-        current = root
-
-        while current:
-            if current.left is None:
-                # To include Rightmost leaf node
-                if current.right is None:
-                    res.append(current.data)
+        if self.isLeaf(root) is False:
+            res.append(root.data)
+        if root.left:
+            self.collectBoundaryLeft(root.left, res)
+        else:
+            self.collectBoundaryLeft(root.right, res)
             
-                current = current.right
-            
-            else:
-                # Find the inorder predecessor
-                predecessor = current.left
-                while predecessor.right and predecessor.right != current:
-                    predecessor = predecessor.right
-                
-                    if predecessor.right is None:
-                
-                        predecessor.right = current
-                        current = current.left
-                    else:
-                        # If it's predecessor is a leaf node
-                        if (predecessor.left is None) :
-                            res.append(predecessor.data)
-                            predecessor.right = None
-                            current = current.right
-                
-    # Function to collect the right boundary nodes
     def collectBoundaryRight(self, root, res):
         if root is None:
             return
-
-        curr = root
-        temp = []
-        while not self.isLeaf(curr):
-            temp.append(curr.data)
-
-            if curr.right:
-                curr = curr.right
-            else:
-                curr = curr.left
-
-        res.extend(reversed(temp))
-
-    # Function to perform boundary traversal
-    def boundaryTraversal(self, root):
-        res = []
-
-        if not root:
-            return res
-
-        # Add root data if it's not a leaf
-        if not self.isLeaf(root):
+        if root.right:
+            self.collectBoundaryRight(root.right, res)
+        else:
+            self.collectBoundaryRight(root.left, res)
+            
+        if self.isLeaf(root) is False:
             res.append(root.data)
-
-        # Collect left boundary
+    def collectLeaves(self, root, res):
+        if root is None:
+            return
+        
+        if self.isLeaf(root):
+            res.append(root.data)
+        else:
+            self.collectLeaves(root.left, res)
+            self.collectLeaves(root.right, res)
+    
+    def isLeaf(self, root):
+        if root.left is None and root.right is None:
+            return True
+        else:
+            return False
+    def boundaryTraversal(self, root):
+        # Code here
+        res = []
+        if root is None:
+            return res
+        if self.isLeaf(root) is False:
+            res.append(root.data)
+            
         self.collectBoundaryLeft(root.left, res)
-
-        # Collect leaf nodes
         self.collectLeaves(root, res)
-
-        # Collect right boundary
         self.collectBoundaryRight(root.right, res)
-
         return res
