@@ -9,19 +9,23 @@ Since the array is circular, after reaching the last element, the search continu
 class Solution:
     def nextLargerElement(arr):
         n = len(arr)
-
-        # to store the results
         res = [-1] * n
-
-        # Iterate for all the elements of the array
-        for i in range(n):
-
-            for j in range(1, n):
-
-                # Checking for next greater element
-                if arr[i] < arr[(i + j) % n]:
-
-                    res[i] = arr[(i + j) % n]
-                    break
-
+        stk = []
+    
+        # Traverse the array from right to left
+        for i in range(2 * n - 1, -1, -1):
+    
+            # Pop elements from the stack that are less
+            # than or equal to the current element
+            while stk and stk[-1] <= arr[i % n]:
+                stk.pop()
+            
+            # If the stack is not empty, the top element
+            # is the next greater element
+            if i < n and stk:
+                res[i] = stk[-1]
+            
+            # Push the current element onto the stack
+            stk.append(arr[i % n])
+        
         return res
